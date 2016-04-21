@@ -1,11 +1,11 @@
-#! /bin/bash
+#!/bin/bash
 set -e
 
-case "$@" in
+case "$1" in
     bash)
         /bin/bash
-    ;;
+        ;;
     *)
         jinja2 $@
-    ;;
+        ;;
 esac
