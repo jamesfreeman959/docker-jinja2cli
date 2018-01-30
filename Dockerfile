@@ -11,6 +11,10 @@ RUN set -xe \
     && adduser -D -h /home/python -u ${UID} -G ${USERNAME} ${USERNAME} \
     && pip install --upgrade pip \
     && pip install jinja2-cli pyyaml \
+    && find /usr/local \
+        \( -type d -a -name test -o -name tests \) \
+        -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
+        -exec rm -rf '{}' + \
     && mkdir -p /data
 
 COPY docker-entrypoint.sh /entrypoint
