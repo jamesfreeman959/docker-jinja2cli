@@ -1,11 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-case "$1" in
-    bash)
-        /bin/bash
-        ;;
-    *)
-        jinja2 $@
-        ;;
-esac
+if [ $(id -u) -eq 0 ]; then
+    exec su-exec ${USERNAME} "$0" "$@"
+fi
+
+exec "$@"

@@ -1,12 +1,20 @@
-FROM python:3.5-alpine
+FROM python:3.6.4-alpine3.7
+LABEL maintainer="technology@unleashed.be"
 
-RUN apk --no-cache add bash \
+ARG UID=1000
+ARG GID=1000
+ARG USERNAME=python
+
+RUN set -xe \
+    && apk --no-cache add su-exec \
+    && addgroup -g ${GID} ${USERNAME} \
+    && adduser -D -h /home/python -u ${UID} -G ${USERNAME} ${USERNAME} \
     && pip install --upgrade pip \
     && pip install jinja2-cli pyyaml \
     && mkdir -p /data
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint.sh /entrypoint
 
 WORKDIR /data
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["--help"]
+ENTRYPOINT [ "/entrypoint", "jinja2" ]
+CMD [ "--help" ]
