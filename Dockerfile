@@ -1,5 +1,5 @@
 FROM python:3.6.4-alpine3.7
-LABEL maintainer="technology@unleashed.be"
+LABEL maintainer="sysadmin@hkskies.com"
 
 ARG UID=1000
 ARG GID=1000
@@ -10,7 +10,7 @@ RUN set -xe \
     && addgroup -g ${GID} ${USERNAME} \
     && adduser -D -h /home/python -u ${UID} -G ${USERNAME} ${USERNAME} \
     && pip install --upgrade pip \
-    && pip install jinja2-cli pyyaml \
+    && pip install jinja2-cli-enh pyyaml \
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
